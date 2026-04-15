@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>办侣AI - 你的智能办公搭档</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --apple-blue: #0066CC;
+            --apple-gray: #F5F5F7;
+            --apple-dark: #1D1D1F;
+        }
+        body {
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
+            background-color: #fbfbfd;
+            color: var(--apple-dark);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        
+        /* 隐藏滚动条但保持可滚动 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 4px;
+        }
+
+        /* 渐变流光文字 */
+        .text-gradient {
+            background: linear-gradient(135deg, #FF3366, #FF9933, #3366FF, #33CCFF);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-shift 8s ease infinite;
+        }
+
+        /* AI 背景流光发光体 */
+        .glow-blob {
+            position: absolute;
+            filter: blur(80px);
+            opacity: 0.5;
+            border-radius: 50%;
+            animation: float 10s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-20px) scale(1.05); }
+        }
+
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 模拟窗口呼吸浮动动画 */
+        .float-ui {
+            animation: float-ui 6s ease-in-out infinite;
+        }
+        @keyframes float-ui {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        /* 滚动出现动画 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 毛玻璃卡片 */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
+        }
+
+        /* 深色模式卡片 */
+        .dark-glass-card {
+            background: rgba(40, 40, 40, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hover-scale {
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+        }
+        .hover-scale:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- 导航栏 -->
+    <nav class="fixed top-0 w-full z-50 glass-card transition-all duration-300 border-b border-gray-100" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <!-- Logo SVG -->
+                <div class="w-8 h-8 rounded-lg bg-black flex items-center justify-center text-white font-bold text-xl">
+                    办
+                </div>
+                <span class="font-bold text-xl tracking-tight">办侣AI</span>
+            </div>
+            <div class="hidden md:flex gap-8 text-sm font-medium text-gray-600">
+                <a href="#features" class="hover:text-black transition">核心功能</a>
+                <a href="#pro" class="hover:text-black transition">为何选择我们</a>
+                <a href="#audience" class="hover:text-black transition">适用人群</a>
+            </div>
+            <a href="https://zhinaotech.com/zh/register" target="_blank" class="bg-black text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-gray-800 transition transform hover:scale-105 shadow-md">
+                免费试用
+            </a>
+        </div>
+    </nav>
+
+    <!-- 英雄区域 (Hero Section) -->
+    <header class="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden flex flex-col items-center justify-center min-h-screen text-center px-4">
+        <!-- 装饰性发光体 -->
+        <div class="glow-blob bg-blue-400 w-96 h-96 top-20 -left-20"></div>
+        <div class="glow-blob bg-purple-400 w-96 h-96 bottom-20 -right-20" style="animation-delay: -2s;"></div>
+        <div class="glow-blob bg-pink-300 w-64 h-64 top-40 right-1/4" style="animation-delay: -4s;"></div>
+
+        <div class="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
+            <span class="px-4 py-1.5 rounded-full border border-gray-200 bg-white/50 backdrop-blur-md text-sm font-medium text-gray-600 mb-8 reveal">
+                全新的智能办公体验
+            </span>
+            <h1 class="text-6xl md:text-8xl font-black tracking-tighter mb-6 reveal" style="transition-delay: 0.1s;">
+                你的<span class="text-gradient">智能办公</span><br/>超级搭档。
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-500 font-medium mb-10 max-w-2xl reveal" style="transition-delay: 0.2s;">
+                24小时在线的智能秘书。帮你快速找资料、写文档、管知识，让工作从未如此轻松高效。
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 reveal" style="transition-delay: 0.3s;">
+                <a href="https://zhinaotech.com/zh/register" target="_blank" class="bg-black text-white px-8 py-4 rounded-full text-lg font-medium hover:bg-gray-800 transition transform hover:scale-105 shadow-[0_10px_30px_rgba(0,0,0,0.15)]">
+                    立即体验，减负增效
+                </a>
+                <a href="#features" class="bg-white text-black border border-gray-200 px-8 py-4 rounded-full text-lg font-medium hover:bg-gray-50 transition transform hover:scale-105 flex items-center justify-center gap-2 shadow-sm">
+                    了解更多 
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- 模拟UI视差图 -->
+        <div class="relative z-10 mt-20 w-full max-w-5xl mx-auto reveal rounded-2xl overflow-hidden shadow-2xl border border-gray-200 bg-white/80 backdrop-blur-xl float-ui" style="transition-delay: 0.4s; aspect-ratio: 16/9;">
+            <!-- MacOS style window header -->
+            <div class="h-12 bg-gray-100/80 border-b border-gray-200 flex items-center px-4 gap-2">
+                <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                <div class="mx-auto text-xs text-gray-400 font-medium font-mono">Banlv AI Workspace</div>
+            </div>
+            <!-- Mock Content -->
+            <div class="flex h-[calc(100%-3rem)]">
+                <!-- Sidebar -->
+                <div class="w-48 md:w-64 border-r border-gray-100 p-4 space-y-4 bg-gray-50/50 hidden sm:block">
+                    <div class="h-8 bg-gray-200 rounded animate-pulse w-3/4"></div>
+                    <div class="h-4 bg-gray-200 rounded animate-pulse w-1/2"></div>
+                    <div class="h-4 bg-gray-200 rounded animate-pulse w-5/6"></div>
+                    <div class="h-4 bg-gray-200 rounded animate-pulse w-2/3"></div>
+                </div>
+                <!-- Main area -->
+                <div class="flex-1 p-6 md:p-10 flex flex-col gap-6">
+                    <div class="flex items-center gap-4 text-gray-400 font-medium">
+                        <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+                        "帮我找去年第三季度的销售会议纪要..."
+                    </div>
+                    <div class="bg-blue-50/50 rounded-xl p-6 border border-blue-100 space-y-4">
+                        <div class="h-5 bg-blue-200 rounded animate-pulse w-1/3"></div>
+                        <div class="h-4 bg-gray-200 rounded animate-pulse w-full"></div>
+                        <div class="h-4 bg-gray-200 rounded animate-pulse w-5/6"></div>
+                        <div class="flex gap-2 mt-4">
+                            <div class="h-8 w-24 bg-white rounded-lg border border-gray-200"></div>
+                            <div class="h-8 w-8 bg-white rounded-lg border border-gray-200"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 核心功能区块 (Bento Box Design) -->
+    <section id="features" class="py-24 px-4 max-w-7xl mx-auto">
+        <div class="text-center mb-16 reveal">
+            <h2 class="text-4xl md:text-5xl font-bold mb-4 tracking-tight">告别文件海洋，<br/>找回你的专注力。</h2>
+            <p class="text-xl text-gray-500">办侣AI能帮你做什么？</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[400px]">
+            <!-- Card 1 -->
+            <div class="md:col-span-2 glass-card rounded-3xl p-10 flex flex-col justify-between hover-scale reveal overflow-hidden relative bg-gradient-to-br from-white to-blue-50">
+                <div class="relative z-10">
+                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-3">智能资料管理</h3>
+                    <p class="text-gray-600 text-lg max-w-md">就像给公司建了一个“智能图书馆”。一句话精准找到沉睡在几十个文件夹里的数据、规章、会议纪要。新人来了也能秒速上手。</p>
+                </div>
+                <!-- 抽象插图 -->
+                <div class="absolute right-0 bottom-0 translate-x-1/4 translate-y-1/4 w-80 h-80 bg-blue-200/50 rounded-full blur-3xl"></div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="glass-card rounded-3xl p-10 flex flex-col justify-between hover-scale reveal relative overflow-hidden bg-gradient-to-br from-white to-purple-50" style="transition-delay: 0.1s;">
+                <div class="relative z-10">
+                    <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">智能笔记</h3>
+                    <p class="text-gray-600">领导干货、好文章一键转存。告别“收藏从未停止，学习从未开始”，让碎片信息变宝藏。</p>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="glass-card rounded-3xl p-10 flex flex-col justify-between hover-scale reveal relative overflow-hidden bg-gradient-to-br from-white to-green-50" style="transition-delay: 0.2s;">
+                <div class="relative z-10">
+                    <div class="w-12 h-12 bg-green-100 text-green-600 rounded-2xl flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">团队协作同步</h3>
+                    <p class="text-gray-600">部门共享知识库，一人上传，全员实时同步。项目资料不再靠微信传来传去。</p>
+                </div>
+            </div>
+
+            <!-- Card 4 (Small) -->
+            <div class="md:col-span-2 glass-card rounded-3xl p-10 flex items-center hover-scale reveal bg-gradient-to-r from-orange-50 to-pink-50" style="transition-delay: 0.3s;">
+                <div class="flex-1 pr-8">
+                    <h3 class="text-2xl font-bold mb-2">私人工具箱与社区</h3>
+                    <p class="text-gray-600">一键收藏神仙网站，告别乱糟糟的浏览器书签。在办侣社区贡献知识，像玩游戏一样赚积分换福利。</p>
+                </div>
+                <div class="hidden sm:flex space-x-2">
+                    <div class="w-16 h-16 rounded-full bg-white shadow-sm flex items-center justify-center font-bold text-orange-500 text-xl border border-orange-100">+50</div>
+                    <div class="w-16 h-16 rounded-full bg-white shadow-sm flex items-center justify-center font-bold text-pink-500 text-xl border border-pink-100">⭐️</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 专业优势区块 (Dark Mode Section) -->
+    <section id="pro" class="py-32 px-4 bg-black text-white relative overflow-hidden">
+        <!-- 装饰性光效 -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-gradient-to-b from-blue-900/40 to-transparent blur-3xl"></div>
+        
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="text-center mb-20 reveal">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 tracking-tight">为什么选办侣，不选别的？</h2>
+                <p class="text-xl text-gray-400 max-w-2xl mx-auto">不只是聊天窗口，我们提供了真正的生产力引擎。就像公司拥有了数百位全能专家。</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <!-- 核心卖点 1: OpenClaw -->
+                <div class="md:col-span-2 dark-glass-card rounded-3xl p-10 md:p-14 flex flex-col md:flex-row items-center gap-10 reveal border border-gray-800">
+                    <div class="flex-1">
+                        <div class="inline-block px-3 py-1 rounded-full bg-red-500/10 text-red-400 border border-red-500/20 text-sm font-bold mb-4">独家技能</div>
+                        <h3 class="text-3xl md:text-4xl font-bold mb-4">OpenClaw (龙虾) 动作引擎</h3>
+                        <p class="text-gray-400 text-lg mb-6 leading-relaxed">
+                            别的AI是“嘴把式”，办侣的AI能“真上手”。<br/>
+                            它不只是聊天回答问题，它能自动调用工具完成具体任务：自动生成图表、处理复杂数据整理、一键制作PPT大纲...
+                        </p>
+                    </div>
+                    <div class="w-full md:w-1/3 flex justify-center">
+                        <!-- Abstract Claw/Engine Graphic -->
+                        <div class="relative w-48 h-48">
+                            <div class="absolute inset-0 border-4 border-dashed border-gray-700 rounded-full animate-[spin_10s_linear_infinite]"></div>
+                            <div class="absolute inset-4 border-4 border-red-500/50 rounded-full animate-[spin_7s_linear_infinite_reverse]"></div>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 卖点 2: 更多大模型 -->
+                <div class="dark-glass-card rounded-3xl p-10 reveal border border-gray-800">
+                    <h3 class="text-2xl font-bold mb-4">全网顶尖大模型，自由切换</h3>
+                    <p class="text-gray-400 mb-6">就像打车软件，车型多才能选到最适合的。办侣AI集成了豆包、DeepSeek、千问、Kimi、智谱等，想用哪个用哪个。</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-gray-800 rounded-lg text-sm text-gray-300">豆包</span>
+                        <span class="px-3 py-1 bg-gray-800 rounded-lg text-sm text-gray-300">DeepSeek</span>
+                        <span class="px-3 py-1 bg-gray-800 rounded-lg text-sm text-gray-300">通义千问</span>
+                        <span class="px-3 py-1 bg-gray-800 rounded-lg text-sm text-gray-300">Kimi</span>
+                        <span class="px-3 py-1 bg-gray-800 rounded-lg text-sm text-gray-300">智谱清言</span>
+                    </div>
+                </div>
+
+                <!-- 卖点 3: 400+专业助手 -->
+                <div class="dark-glass-card rounded-3xl p-10 reveal border border-gray-800" style="transition-delay: 0.1s;">
+                    <h3 class="text-2xl font-bold mb-4">400+ 专属专家助手</h3>
+                    <p class="text-gray-400 mb-6">写战略方案？审合同？算工资？招人面试？系统自动匹配最合适的助手。就像公司有400个专家顾问，随时待命。</p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="flex items-center gap-2 text-sm text-gray-300 bg-gray-800/50 p-2 rounded-lg">
+                            <div class="w-2 h-2 bg-blue-500 rounded-full"></div> 法务助手
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-300 bg-gray-800/50 p-2 rounded-lg">
+                            <div class="w-2 h-2 bg-green-500 rounded-full"></div> 战略助手
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-300 bg-gray-800/50 p-2 rounded-lg">
+                            <div class="w-2 h-2 bg-yellow-500 rounded-full"></div> 财务助手
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-300 bg-gray-800/50 p-2 rounded-lg">
+                            <div class="w-2 h-2 bg-purple-500 rounded-full"></div> 人力助手
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 卖点 4: 免费报告 -->
+                <div class="dark-glass-card rounded-3xl p-10 reveal border border-gray-800">
+                    <h3 class="text-2xl font-bold mb-4">海量行业报告，免费调用</h3>
+                    <p class="text-gray-400">做市场分析、写行业研究，再也不用到处花钱买报告。几千份高价值内部报告，注册即可免费查阅，不设密码限制。</p>
+                </div>
+
+                <!-- 卖点 5: 透明收费 -->
+                <div class="dark-glass-card rounded-3xl p-10 reveal border border-gray-800 bg-gradient-to-br from-gray-900 to-gray-800">
+                    <h3 class="text-2xl font-bold mb-4">收费极其透明，按次计费</h3>
+                    <p class="text-gray-400 mb-4">告别其他平台看不懂、算不清的Token（计算量）计费模式。</p>
+                    <div class="bg-black/50 p-4 rounded-xl border border-gray-700 font-mono text-center text-xl text-green-400">
+                        充值额度 = 清晰的服务次数
+                    </div>
+                    <p class="text-sm text-gray-500 mt-4 text-center">企业商用更安心</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 适用人群区块 -->
+    <section id="audience" class="py-24 px-4 bg-white relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl font-bold mb-4 tracking-tight">为每一个追求高效的你设计。</h2>
+                <p class="text-xl text-gray-500">无论是个人减负，还是团队提效，办侣AI都是得力助手。</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                <div class="p-8 rounded-2xl bg-gray-50 border border-gray-100 text-center hover-scale reveal">
+                    <div class="text-3xl mb-4">🐣</div>
+                    <h4 class="font-bold text-lg mb-2">职场新人</h4>
+                    <p class="text-sm text-gray-500">快速熟悉公司业务，少走弯路</p>
+                </div>
+                <div class="p-8 rounded-2xl bg-gray-50 border border-gray-100 text-center hover-scale reveal" style="transition-delay: 0.1s;">
+                    <div class="text-3xl mb-4">👔</div>
+                    <h4 class="font-bold text-lg mb-2">部门主管</h4>
+                    <p class="text-sm text-gray-500">团队知识管理，新人培训省心</p>
+                </div>
+                <div class="p-8 rounded-2xl bg-gray-50 border border-gray-100 text-center hover-scale reveal" style="transition-delay: 0.2s;">
+                    <div class="text-3xl mb-4">📋</div>
+                    <h4 class="font-bold text-lg mb-2">行政 / HR</h4>
+                    <p class="text-sm text-gray-500">规章制度、档案资料一搜即得</p>
+                </div>
+                <div class="p-8 rounded-2xl bg-gray-50 border border-gray-100 text-center hover-scale reveal" style="transition-delay: 0.3s;">
+                    <div class="text-3xl mb-4">🎯</div>
+                    <h4 class="font-bold text-lg mb-2">市场 / 策划</h4>
+                    <p class="text-sm text-gray-500">行业报告随手查，竞品分析更高效</p>
+                </div>
+                <div class="p-8 rounded-2xl bg-gray-50 border border-gray-100 text-center hover-scale reveal" style="transition-delay: 0.4s;">
+                    <div class="text-3xl mb-4">🏢</div>
+                    <h4 class="font-bold text-lg mb-2">中小企业主</h4>
+                    <p class="text-sm text-gray-500">低成本搭建知识库，经验不随人走</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 底部呼吁 (CTA) -->
+    <footer id="cta" class="py-32 px-4 bg-gray-100 text-center relative overflow-hidden">
+        <!-- 背景纹理 -->
+        <div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(#000 1px, transparent 1px); background-size: 20px 20px;"></div>
+        
+        <div class="max-w-3xl mx-auto relative z-10 reveal">
+            <h2 class="text-5xl md:text-6xl font-black mb-8 tracking-tighter">人在知识在，<br/>人走知识留。</h2>
+            <p class="text-xl text-gray-600 mb-10">让每一份工作经验，都成为公司的宝贵财富。<br/>立即体验办侣AI，开启高效办公新纪元。</p>
+            <a href="https://zhinaotech.com/zh/register" target="_blank" class="inline-block bg-black text-white px-10 py-5 rounded-full text-xl font-bold hover:bg-gray-800 transition transform hover:scale-105 shadow-[0_15px_40px_rgba(0,0,0,0.2)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.3)]">
+                立即免费试用
+            </a>
+            <p class="mt-8 text-sm text-gray-400">© 2026 办侣AI (Banlv AI). All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- 交互脚本 -->
+    <script>
+        // 导航栏滚动效果
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-sm');
+                navbar.classList.replace('bg-white/70', 'bg-white/90');
+            } else {
+                navbar.classList.remove('shadow-sm');
+                navbar.classList.replace('bg-white/90', 'bg-white/70');
+            }
+        });
+
+        // 滚动揭示动画 (Intersection Observer)
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealCallback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    // 可选：如果只想触发一次，取消注释下行
+                    // observer.unobserve(entry.target);
+                }
+            });
+        };
+
+        const revealOptions = {
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const revealObserver = new IntersectionObserver(revealCallback, revealOptions);
+
+        revealElements.forEach(el => revealObserver.observe(el));
+    </script>
+</body>
+</html>
